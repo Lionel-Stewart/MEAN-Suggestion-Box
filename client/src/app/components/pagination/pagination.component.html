@@ -1,0 +1,19 @@
+<div class="row" *ngIf="totalItems">
+  <div class="col-xs-12 col-12" >
+    <pagination 
+      [rotate]="true"
+      [maxSize]="5"  
+      [boundaryLinks]="true" 
+      
+      nextText="&rsaquo;"
+      lastText="&raquo;"
+      firstText="&laquo;" 
+      previousText="&lsaquo;"
+
+      [(ngModel)]="currentPage" 
+      [totalItems]="totalItems" 
+      [itemsPerPage]="itemsPerPage" 
+      (pageChanged)="pageChanged($event)">
+    </pagination>
+  </div>
+</div>

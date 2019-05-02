@@ -1,0 +1,63 @@
+<div class="container">
+  <ng-container *ngIf="comment">
+    <div class="card bg-light mb-3">
+      <div class="card-header text-muted text-center">
+        <span class="float-left">
+          <i class="fa fa-clock-o"></i>
+          {{ comment.displayDate.substr(0, 15) }}
+        </span>
+
+        <span class="float-right">
+          <i class="fa fa-user"></i> 
+          {{ comment.author }}
+        </span>
+      </div>
+
+      <div class="card-body">
+        <span  class="btn-group pointer float-right" *ngIf="user === comment.author" dropdown>
+          <span id="button-basic" dropdownToggle>
+            <i class="fa fa-ellipsis-v"></i>
+          </span>
+
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu">
+            <ng-container *ngIf="!showEditForm">
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="toggleShowEditForm()">Edit</a>
+              </li>
+
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="deleteComment(comment._id)">Delete</a>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="showEditForm">
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="toggleShowEditForm()">Cancel</a>
+              </li>
+            </ng-container>
+          </ul>
+        </span>
+
+        <ng-container *ngIf="!showEditForm">
+          <span>{{ comment.content }}</span>
+        </ng-container>
+
+        <ng-container *ngIf="showEditForm">
+          <textarea class="form-control" name="content" 
+                    [(ngModel)]="content" (keydown)="onEditSubmit($event)">
+          </textarea>
+        </ng-container>
+      </div>
+
+      <div class="card-footer text-muted text-center">
+        <span class="float-right pointer">
+          <i class="fa fa-thumbs-up" (click)="addLike(comment)"></i>
+          {{ comment.likes }} 
+
+          <i class="fa fa-thumbs-down" (click)="addDislike(comment)"></i>
+          {{ comment.dislikes }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+</div>

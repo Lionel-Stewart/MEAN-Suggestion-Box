@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" [routerLink]="['/']">Suggestion Box App</a>
+  <button class="navbar-toggler" (click)="toggleCollaspe()" >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" [collapse]="isCollapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+        <a class="nav-link" [routerLink]="['/suggestions']" (click)="getSuggestions()"> 
+          <i class="fa fa-home"></i>
+          Home
+        </a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngIf="authService.loggedIn()">
+        <a class="nav-link">
+          <i class="fa fa-user"></i>
+          {{ user }}
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/suggestions/new']">
+          <i class="fa fa-plus"></i>
+          Create
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/register']">
+          <i class="fa fa-user"></i>
+          Register
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/login']">
+          <i class="fa fa-sign-in"></i>
+          Login
+        </a>
+      </li>
+
+      <li class="nav-item pointer" *ngIf="authService.loggedIn()">
+        <a class="nav-link" (click)="onLogoutClick()">
+          <i class="fa fa-sign-out"></i>
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

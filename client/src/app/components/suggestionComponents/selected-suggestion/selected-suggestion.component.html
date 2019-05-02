@@ -1,0 +1,74 @@
+<div class="container">
+  <ng-container *ngFor="let suggestion of suggestionService.selectedSuggestion">
+    <div class="card bg-light mb-3">
+      <div class="card-header text-muted text-center">
+        <span class="float-left">
+          <i class="fa fa-clock-o"></i>
+          {{ suggestion.displayDate.substr(0, 15) }}
+        </span>
+
+         <span class="float-right">
+          <i class="fa fa-user"></i> 
+          {{suggestion.author}}
+        </span>
+      </div>
+
+      <div class="card-body">
+        <h5 class="card-title text-center">
+          {{suggestion.title}}
+          <span  class="btn-group pointer float-right" *ngIf="user === suggestion.author" dropdown>
+            <span id="button-basic" dropdownToggle>
+              <i class="fa fa-ellipsis-v"></i>
+            </span>
+            
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu">
+              <li role="menuitem">
+                <a class="dropdown-item" routerLink="/suggestions/{{suggestion._id}}/edit">Edit</a>
+              </li>
+
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="deleteSuggestion(suggestion._id)">Delete</a>
+              </li>
+            </ul>
+          </span>
+        </h5>
+        <hr>
+        <p>{{suggestion.description}}</p>
+      </div>
+
+      <div class="card-footer text-muted text-center">
+        <span class="float-right">
+          <i class="fa fa-thumbs-up pointer" 
+             (click)="addLike(suggestion)">
+          </i>
+          {{suggestion.likes}} 
+
+          <i class="fa fa-thumbs-down pointer" 
+             (click)="addDislike(suggestion)">
+          </i>
+          {{suggestion.dislikes}}
+        </span>
+        
+        <ng-container *ngIf="commentService.numberOfComments > 0">
+          <ng-container *ngIf="!showComments">
+            <span class="float-left pointer" (click)="toggleShowComments()">
+              Show Comments ({{ commentService.numberOfComments }})
+              <i class="fa fa-caret-down"></i>
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="showComments">
+            <span class="float-left pointer" (click)="toggleShowComments()">
+              Hide Comments 
+              <i class="fa fa-caret-up"></i>
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="showComments">
+    <app-comment-header></app-comment-header>
+  </ng-container>
+</div>

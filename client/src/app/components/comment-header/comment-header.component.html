@@ -1,0 +1,28 @@
+<div class="container">
+  <h3 class="comment-header">Comments ({{ commentService.numberOfComments }})</h3>
+
+  <ng-container *ngIf="authService.loggedIn()">
+    <div>
+      <textarea class="form-control" rows="2" placeholder=" Enter Comment" 
+                [(ngModel)]="content" name="content" (keydown)="onCommentSubmit($event)">
+      </textarea>
+    </div>
+  </ng-container>
+
+   <ng-container *ngIf="!authService.loggedIn()">
+    <p>Please <a [routerLink]="['/login']">log in</a> to comment</p>
+  </ng-container>
+
+  <ng-container *ngFor="let comment of commentService.commentList">
+    <app-comment-body [comment]="comment" (commentAction)="getComments()"></app-comment-body>
+  </ng-container>
+
+  <ng-container *ngIf="commentService.numberOfComments > commentService.commentsPerPage">
+    <app-pagination 
+      [currentPage]="pageService.currentPage"
+      [totalItems]="commentService.numberOfComments"
+      [itemsPerPage]="commentService.commentsPerPage"
+      (pageChange)="getComments($event)">
+    </app-pagination>
+  </ng-container>
+</div>
