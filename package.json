@@ -4,6 +4,7 @@
   "description": "A MEAN Stack CRUD suggestion box app with authentication by Passport.js",
   "main": "server.js",
   "scripts": {
+    "start": "node bin/www",
     "client-install": "npm install --prefix client",
     "client": "npm start --prefix client",
     "server": "nodemon bin/www",
